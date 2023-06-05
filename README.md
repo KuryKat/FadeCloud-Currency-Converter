@@ -23,8 +23,13 @@ Example:
 
 
 ### Values:
-As it stands right now (06/05/2023), the conversions are the following (all values are based of the clouds current pricing):
-* clouds = 100 
+
+*All values are based of the clouds current pricing*
+
+As it stands right now (06/05/2023), the conversions are the following:
+
+* clouds = 100
+    * BASE VALUE FOR OTHER CONVERSIONS
 * souls = 250b 
 * gems = 2.5b
 * knight = 2.5m
