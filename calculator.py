@@ -1,4 +1,5 @@
-import sys
+import sys # Just for Command Arguments for CLI
+import os # Just to Clear The screen
 
 currencies = {
     'clouds'    : '100',
@@ -26,22 +27,6 @@ multipliers = {
 
 def concat_with_comma(words):
     return ', '.join(words[:-2]) + (', ' if len(words) > 2 else '') + ' and '.join(words[-2:])
-
-if(len(sys.argv) > 1 and len(sys.argv) <= 4):
-    inputType  = sys.argv[1]
-    value      = sys.argv[2]
-    outputType = sys.argv[3]
-else:
-    currencies_str = concat_with_comma(['"{}"'.format(k) for k in currencies.keys()])
-    multipliers_list = ['"1{}"'.format(k) for k in multipliers.keys()]
-    multipliers_list.reverse()
-    multipliers_str = concat_with_comma(multipliers_list)
-    inputType  = input('What is the input currency?\n  - You can use {}\n=> '.format(currencies_str))
-    print()
-    value      = input('What is the value to convert?\n  - You can use {}\n=> '.format(multipliers_str))
-    print()
-    outputType = input('What is the output currency?\n  - You can use {}\n=> '.format(currencies_str))
-    print()
 
 def convertNumber(value):
     try:
@@ -95,16 +80,41 @@ def convertValues(value, input, output):
     else:
         raise InputError("You need to input a valid currency!")
 
-try:
-    result = convertValues(value, inputType, outputType)
-    
-    print("================================")
-    print("RESULT: {} {} = {} {}".format(value, inputType, result, outputType))
-    print("================================")
-except Exception as err:
-    print("=================================================================")
-    print("** ERROR: {} **".format(err))
-    print("=================================-===============================")
+def input_user_choices():
+    os.system(['clear','cls'][os.name == 'nt'])
+    currencies_str = concat_with_comma(['"{}"'.format(k) for k in currencies.keys()])
+    multipliers_list = ['"1{}"'.format(k) for k in multipliers.keys()]
+    multipliers_list.reverse()
+    multipliers_str = concat_with_comma(multipliers_list)
+    inputType  = input('\nWhat is the input currency?\n  - You can use {}\n=> '.format(currencies_str))
+    value      = input('\nWhat is the value to convert?\n  - You can use {}\n=> '.format(multipliers_str))
+    outputType = input('\nWhat is the output currency?\n  - You can use {}\n=> '.format(currencies_str))
+    return [value, inputType, outputType]
+
+def run_program(value, input, output):
+    try:
+        result = convertValues(value, input, output)
+
+        print("\n================================")
+        print("RESULT: {} {} = {} {}".format(value, input, result, output))
+        print("================================")
+    except Exception as err:
+        print("=================================================================")
+        print("** ERROR: {} **".format(err))
+        print("=================================-===============================")
 
 
-input("Press Enter To Close!")
+if(len(sys.argv) > 1 and len(sys.argv) <= 4):
+    value      = sys.argv[1]
+    inputType  = sys.argv[2]
+    outputType = sys.argv[3]
+    run_program(value, inputType, outputType)
+else:
+    while True:
+        value, inputType, outputType = input_user_choices()
+        run_program(value, inputType, outputType)
+        final_choice = input("\n\nRun again? (Y/N) [Y]\n=> ") or "Y"
+
+        if (final_choice.lower() == "n"):
+            print("\nGoodbye! :) <3")
+            break
