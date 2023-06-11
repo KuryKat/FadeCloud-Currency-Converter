@@ -37,8 +37,11 @@ else:
     multipliers_list.reverse()
     multipliers_str = concat_with_comma(multipliers_list)
     inputType  = input('What is the input currency?\n  - You can use {}\n=> '.format(currencies_str))
+    print()
     value      = input('What is the value to convert?\n  - You can use {}\n=> '.format(multipliers_str))
+    print()
     outputType = input('What is the output currency?\n  - You can use {}\n=> '.format(currencies_str))
+    print()
 
 def convertNumber(value):
     try:
@@ -55,10 +58,10 @@ def convertNumber(value):
 def formatNumber(number):
     for suffix, factor in multipliers.items():
         if number >= factor:
-            formatted_number = str(int(round(number / factor, 1))) + suffix
+            formatted_number = "{:.2f}{}".format(round(number / factor, 1), suffix)
             break
     else:
-        formatted_number = str(int(round(number, 1)))
+        formatted_number = "{:.2f}".format(round(number, 1))
 
     return formatted_number
 
@@ -102,3 +105,6 @@ except Exception as err:
     print("=================================================================")
     print("** ERROR: {} **".format(err))
     print("=================================-===============================")
+
+
+input("Press Enter To Close!")
