@@ -25,6 +25,7 @@ Example:
 ### Values:
 
 *All values are based of the clouds current pricing*
+
 **Last updated at Sunday, June 11, 2023**
 
 As it stands right now, the conversions are the following:
